@@ -10,4 +10,4 @@ success_test()
 try:
     unsuccessful_test()
 except AssertionError as e:
-    print(f"Test failed successfully ", e)
+    print("Test failed successfully ", e)

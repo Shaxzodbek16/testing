@@ -5,7 +5,6 @@ from src.main import func
 
 
 def test_main():
-
     assert 1 == 1
 
 
@@ -16,14 +15,24 @@ def test_logic():
 
 
 def test_func():
-
     assert func(1) == 2
 
 
-def test_sum():
-
-    assert sum_(1, 1) == 2
-
-
-def test__sum_error():
-    pytest.raises(TypeError, sum_, 1, "1")
+@pytest.mark.parametrize(
+    "x, y, result",
+    [
+        (1, 1, 2),
+        (1, "1", TypeError),
+        (-1, -1, -2),
+        (2**65, 2**65, 2**66),
+        (1.1, 1.1, TypeError),
+        ([1], [1], TypeError),
+        (1 + 3j, 1 + 5j, TypeError),
+    ],
+)
+def test__sum(x, y, result):
+    if result == TypeError:
+        with pytest.raises(TypeError):
+            sum_(x, y)
+    else:
+        assert sum_(x, y) == result
