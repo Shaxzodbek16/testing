@@ -1,38 +1,37 @@
-from src.main import Logic, sum_
+from src.main import sum_, minus
 import pytest
-
-from src.main import func
-
-
-def test_main():
-    assert 1 == 1
+from contextlib import nullcontext as does_not_raise
 
 
-def test_logic():
-    logic = Logic()
+class TestCalculator:
+    @pytest.mark.parametrize(
+        "x, y, result, expectation",
+        [
+            (1, 1, 2, does_not_raise()),
+            (1, "1", 2, pytest.raises(TypeError)),
+            (-1, -1, -2, does_not_raise()),
+            (2 ** 65, 2 ** 65, 2 ** 66, does_not_raise()),
+            (1.1, 1.1, 2.2, pytest.raises(TypeError)),
+            ([1], [1], [1, 1], pytest.raises(TypeError)),
+            (1 + 3j, 1 + 5j, 2 + 8j, pytest.raises(TypeError)),
+        ],
+    )
+    def test__sum(self, x, y, result, expectation):
+        with expectation:
+            assert sum_(x, y) == result
 
-    assert logic.logic_param == 10
-
-
-def test_func():
-    assert func(1) == 2
-
-
-@pytest.mark.parametrize(
-    "x, y, result",
-    [
-        (1, 1, 2),
-        (1, "1", TypeError),
-        (-1, -1, -2),
-        (2**65, 2**65, 2**66),
-        (1.1, 1.1, TypeError),
-        ([1], [1], TypeError),
-        (1 + 3j, 1 + 5j, TypeError),
-    ],
-)
-def test__sum(x, y, result):
-    if result == TypeError:
-        with pytest.raises(TypeError):
-            sum_(x, y)
-    else:
-        assert sum_(x, y) == result
+    @pytest.mark.parametrize(
+        "x, y, result, expectation",
+        [
+            (1, 1, 0, does_not_raise()),
+            (1, "1", 0, pytest.raises(TypeError)),
+            (-1, -1, 0, does_not_raise()),
+            (2 ** 65, 2 ** 65, 0, does_not_raise()),
+            (1.1, 1.1, 0, pytest.raises(TypeError)),
+            ([1], [1], 0, pytest.raises(TypeError)),
+            (1 + 3j, 1 + 5j, 0, pytest.raises(TypeError)),
+        ],
+    )
+    def test_minus(self, x, y, result, expectation):
+        with expectation:
+            assert minus(x, y) == result
