@@ -1,4 +1,5 @@
 from typing import List
+from collections import Counter
 
 
 def find_closest_number(nums):
@@ -15,7 +16,7 @@ def find_closest_number(nums):
 
 def contains_duplicat(nums: List[int]) -> bool:
     if not isinstance(nums, list):
-        raise TypeError("Input should be a list")
+        raise TypeError("Input must be a list")
     seen = set()
     for i in nums:
         if i in seen:
@@ -23,3 +24,14 @@ def contains_duplicat(nums: List[int]) -> bool:
         else:
             seen.add(i)
     return False
+
+
+def is_anagram(s: str, t: str) -> bool:
+    if not isinstance(s, str) or not isinstance(t, str):
+        raise TypeError("Input must be a string")
+    if set(s) != set(t):
+        return False
+    for char in set(s):
+        if s.count(char) != t.count(char):
+            return False
+    return True
