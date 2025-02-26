@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def mock_user_data():
     print("\nSession scope fixture was opened")
     users = {
@@ -12,7 +12,7 @@ def mock_user_data():
     print("\nSession scope fixture was closed")
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def get_user(mock_user_data):
     def _get_user(user_key):
         return mock_user_data[user_key]
@@ -57,10 +57,10 @@ def test_modified_alice_age(get_user, modify_alice_age):
     assert alice["age"] == 18
 
 
-@pytest.mark.parametrize("user_key, expected_email", [
-    ("user1", "alice@gmail.com"),
-    ("user2", "bob@example.com")
-])
+@pytest.mark.parametrize(
+    "user_key, expected_email",
+    [("user1", "alice@gmail.com"), ("user2", "bob@example.com")],
+)
 def test_emails(get_user, user_key, expected_email):
     user = get_user(user_key)
     assert user["email"] == expected_email
@@ -72,6 +72,11 @@ def test_failing_case():
 
 
 def test_dynamic_user(mock_user_data):
-    mock_user_data["user3"] = {"id": 3, "username": "charlie", "email": "charlie@example.com", "age": 40}
+    mock_user_data["user3"] = {
+        "id": 3,
+        "username": "charlie",
+        "email": "charlie@example.com",
+        "age": 40,
+    }
     assert mock_user_data["user3"]["age"] == 40
     del mock_user_data["user3"]
