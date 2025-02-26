@@ -45,7 +45,7 @@ def test_with_parametrize_even_index_chars(text, expected, error):
         ([1, 2], 1, does_not_raise()),
         (12345, None, pytest.raises(TypeError)),
         ([1], None, pytest.raises(ValueError)),
-    ]
+    ],
 )
 def test_with_parametrize_get_second_largest(numbers, expected, error):
     with error:
