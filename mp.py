@@ -11,7 +11,7 @@ def heavy_computation(n):
 if __name__ == "__main__":
     start_time = time.time()
 
-    numbers = [10_000_000,100_000_00_0, 15_000_000_00, 18_000_000_0] * 20
+    numbers = [10_000_000_000,100_000_000, 150_000_000, 180_000_000] * 20
     processes = []
     results = []
 
